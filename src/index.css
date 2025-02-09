@@ -1,7 +1,11 @@
 @import 'tailwindcss';
 
+.bg {
+  background: linear-gradient(135deg, #213555, #4f709c);
+}
+
 .button {
-  background-color: crimson;
+  background-color: #ff8c00;
   padding: 5px 10px 5px 10px;
   border-radius: 6px;
   color: white;
@@ -9,6 +13,23 @@
 }
 
 .button:hover {
-  background-color: #c51230;
+  background-color: #e07a00;
   transition: 0.5s ease;
+}
+
+input {
+  border: 1px solid #213555;
+  outline: none;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.form {
+  box-shadow: 2px 2px 10px 4px #fdba74;
+  padding: 20px 30px;
+  border-radius: 10px;
+}
+
+.form:hover {
+  box-shadow: 2px 2px 15px 4px #ffb26f;
 }

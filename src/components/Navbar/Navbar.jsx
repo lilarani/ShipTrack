@@ -2,17 +2,28 @@ import { useContext, useState } from 'react';
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { AuthContext } from '../../providers/AuthProvider';
+import { Link } from 'react-router';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user, signOutUser } = useContext(AuthContext);
 
+  const userLogOut = () => {
+    signOutUser()
+      .then(result => toast.success('Log-out successfully'))
+      .catch(error => {
+        toast.error('Failed Log-out');
+      });
+  };
+
+  console.log(user);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div className="flex justify-between my-1 container mx-auto items-center">
+    <div className="flex justify-between p-1 container mx-auto items-center sticky top-0">
       <h2 className="text-base md:text-2xl font-bold hidden md:block">
         ShipTrack
       </h2>
@@ -42,10 +53,26 @@ const Navbar = () => {
         </div>
       )}
 
-      <div className="flex gap-5 text-base font-semibold">
-        <p className="button ">Sign-in</p>
-        <p className="button">Sign-Up</p>
-      </div>
+      {user ? (
+        <div className="">
+          <img src={user.photoURL} alt="" />
+          <button onClick={userLogOut} className="button">
+            Logout
+          </button>
+        </div>
+      ) : (
+        <div className="flex gap-5 text-base font-semibold">
+          <Link to={'/login'} className="button ">
+            Sign-in
+          </Link>
+          <Link
+            to={'/signUp'}
+            className="border border-orange-400 px-3 rounded-md text-orange-400 hover:text-orange-500 py-1"
+          >
+            Sign-Up
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

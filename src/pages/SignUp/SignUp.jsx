@@ -1,14 +1,29 @@
-const Login = () => {
+import toast from 'react-hot-toast';
+import useAuth from '../../hooks/useAuth';
+
+const SignUp = () => {
+  const { createNewUser } = useAuth();
+
   const handleSubmit = e => {
     e.preventDefault();
-    signInUser(email, password)
+
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const photo = form.photo.value;
+    console.log(name, email, password, photo);
+    createNewUser(email, password)
       .then(result => {
         console.log(result.user);
+        toast.success('Your account has been created successfully! ');
+        e.target.reset();
       })
       .catch(error => {
-        console.log(error.message);
+        toast.error('Failed account created!');
       });
   };
+
   return (
     <div className="container mx-auto mt-24 min-h-screen">
       <form onSubmit={handleSubmit}>
@@ -24,7 +39,8 @@ const Login = () => {
             name="password"
             placeholder="password"
           />
-
+          <label>Photo-URL</label>
+          <input type="text" placeholder="photo-url" name="photo" />
           <button
             type="submit"
             className="border-orange-400 border font-bold mt-4 text-orange-400  w-fit mx-auto px-6 py-1 hover:text-orange-500 rounded-full "
@@ -37,4 +53,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
